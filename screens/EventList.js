@@ -30,12 +30,14 @@ const EventList = ({ navigation, route }) => {
 	}, []);
 
 	const EventItem = ({ item }) => (
-		<TouchableOpacity style={styles.buttonStyle}>
+		<TouchableOpacity
+			style={styles.buttonStyle}
+			onPress={() => {
+				navigation.navigate("EventDetails", { id: item.id, name: item.name, location: item.location, start: item.start, and: item.end, favourite: item.favourite });
+			}}
+		>
 			<Text style={styles.buttonText}>
 				{item.name} at {item.location}
-			</Text>
-			<Text style={styles.buttonText}>
-				{item.start.getMonth()}-{item.start.getDate()} to {item.end.getMonth()}-{item.end.getDate()}
 			</Text>
 		</TouchableOpacity>
 	);

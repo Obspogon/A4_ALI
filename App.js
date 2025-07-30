@@ -21,10 +21,9 @@ export default function App() {
 				<Stack.Group screenOptions={headerOption1}>
 					<Stack.Screen component={EventList} name="EventList" />
 				</Stack.Group>
-				{/* <Stack.Group screenOptions={headerOption2}>
-					<Stack.Screen component={AboutScreen} name="AboutScreen" />
-					<Stack.Screen component={ContactScreen} name="ContactScreen" />
-				</Stack.Group> */}
+				<Stack.Group screenOptions={headerOption2}>
+					<Stack.Screen component={EventDetails} name="EventDetails" />
+				</Stack.Group>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
