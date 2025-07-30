@@ -1,22 +1,31 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import EventList from "./screens/EventList";
 
+const Stack = createNativeStackNavigator();
 export default function App() {
+	const headerOption1 = () => ({
+		headerStyle: { backgroundColor: "#10ac84" },
+		headerTintColor: "white",
+		headerTitleStyle: { fontWeight: "bold" },
+	});
+	const headerOption2 = () => ({
+		headerStyle: { backgroundColor: "brown" },
+		headerTintColor: "white",
+		headerTitleStyle: { fontWeight: "bold" },
+	});
+
 	return (
-		<SafeAreaView style={styles.container}>
-			<View style={{ paddingTop: StatusBar.currentHeight }}>
-				<Text>Open up App.js to start working on your app!</Text>
-				<StatusBar style="auto" />
-			</View>
-		</SafeAreaView>
+		<NavigationContainer>
+			<Stack.Navigator initialRouteName="EventList">
+				<Stack.Group screenOptions={headerOption1}>
+					<Stack.Screen component={EventList} name="EventList" />
+				</Stack.Group>
+				{/* <Stack.Group screenOptions={headerOption2}>
+					<Stack.Screen component={AboutScreen} name="AboutScreen" />
+					<Stack.Screen component={ContactScreen} name="ContactScreen" />
+				</Stack.Group> */}
+			</Stack.Navigator>
+		</NavigationContainer>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-});
