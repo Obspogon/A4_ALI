@@ -34,6 +34,9 @@ const EventList = ({ navigation, route }) => {
 			<Text style={styles.buttonText}>
 				{item.name} at {item.location}
 			</Text>
+			<Text style={styles.buttonText}>
+				{item.start.getMonth()}-{item.start.getDate()} to {item.end.getMonth()}-{item.end.getDate()}
+			</Text>
 		</TouchableOpacity>
 	);
 
