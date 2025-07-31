@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import EventList from "./screens/EventList";
+import EventDetails from "./screens/EventDetails";
 
 const Stack = createNativeStackNavigator();
 export default function App() {

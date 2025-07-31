@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, TouchableOpacity } from "react-native";
+import { Button, StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, Pressable } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { FirebaseDB } from "../config/FirebaseConfig";
 
@@ -30,16 +30,16 @@ const EventList = ({ navigation, route }) => {
 	}, []);
 
 	const EventItem = ({ item }) => (
-		<TouchableOpacity
+		<Pressable
 			style={styles.buttonStyle}
 			onPress={() => {
-				navigation.navigate("EventDetails", { id: item.id, name: item.name, location: item.location, start: item.start, and: item.end, favourite: item.favourite });
+				navigation.navigate("EventDetails", { id: item.id, name: item.name, location: item.location, start: new Date(item.start.seconds * 1000), end: new Date(item.end.seconds * 1000), favourite: item.favourite });
 			}}
 		>
 			<Text style={styles.buttonText}>
 				{item.name} at {item.location}
 			</Text>
-		</TouchableOpacity>
+		</Pressable>
 	);
 
 	return (
