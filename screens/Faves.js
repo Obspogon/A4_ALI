@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, Pressable, Alert } from "react-native";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc } from "firebase/firestore";
 import { FirebaseDB } from "../config/FirebaseConfig";
 
 const Faves = ({ navigation, route }) => {
@@ -32,6 +32,20 @@ const Faves = ({ navigation, route }) => {
 		getEvents();
 	}, []);
 
+	const removeAllFaves = async () => {
+		try {
+			const collectionRef = collection(FirebaseDB, "events");
+			const eventDocs = await getDocs(collectionRef);
+
+			eventDocs.forEach((docu) => {
+				const eventRef = doc(FirebaseDB, "events", docu.id);
+				setDoc(eventRef, { favourite: false }, { merge: true });
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const EventItem = ({ item }) => (
 		<Pressable
 			style={styles.buttonStyle}
@@ -53,16 +67,16 @@ const Faves = ({ navigation, route }) => {
 				<Pressable
 					style={[styles.buttonStyle, { backgroundColor: "red" }]}
 					onPress={() => {
-						Alert.alert(
-							"Delete all Favorites?",
+						Alert.alert("Delete all Favorites?", "", [
 							{ text: "No", style: "cancel" },
 							{
 								text: "Yes",
 								onPress: () => {
+									removeAllFaves();
 									navigation.popToTop();
 								},
-							}
-						);
+							},
+						]);
 					}}
 				>
 					<Text style={styles.buttonText}>Delete All Faves</Text>

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Button, SafeAreaView, StatusBar } from "react-native";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { FirebaseDB } from "../config/FirebaseConfig";
 
 const EventDetails = ({ navigation, route }) => {
@@ -9,7 +9,6 @@ const EventDetails = ({ navigation, route }) => {
 		try {
 			const docRef = doc(FirebaseDB, "events", id);
 			setDoc(docRef, { favourite: !favourite }, { merge: true });
-			favourite = !favourite;
 			navigation.replace("EventDetails", { id: id, name: name, location: location, start: start, end: end, favourite: !favourite });
 		} catch (error) {
 			console.log(error);
