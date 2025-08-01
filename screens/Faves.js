@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, Pressable } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, Pressable, Alert } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { FirebaseDB } from "../config/FirebaseConfig";
 
@@ -50,6 +50,23 @@ const Faves = ({ navigation, route }) => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={{ paddingTop: StatusBar.currentHeight }}>
+				<Pressable
+					style={[styles.buttonStyle, { backgroundColor: "red" }]}
+					onPress={() => {
+						Alert.alert(
+							"Delete all Favorites?",
+							{ text: "No", style: "cancel" },
+							{
+								text: "Yes",
+								onPress: () => {
+									navigation.popToTop();
+								},
+							}
+						);
+					}}
+				>
+					<Text style={styles.buttonText}>Delete All Faves</Text>
+				</Pressable>
 				<FlatList keyExtractor={(item) => item.id} data={eventList} renderItem={({ item }) => <EventItem item={item} />} />
 				<StatusBar style="auto" />
 			</View>

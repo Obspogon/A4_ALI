@@ -46,7 +46,7 @@ const EventList = ({ navigation, route }) => {
 		<SafeAreaView style={styles.container}>
 			<View style={{ paddingTop: StatusBar.currentHeight }}>
 				<Pressable
-					style={styles.buttonStyle}
+					style={[styles.buttonStyle, { backgroundColor: "brown" }]}
 					onPress={() => {
 						navigation.navigate("Faves");
 					}}

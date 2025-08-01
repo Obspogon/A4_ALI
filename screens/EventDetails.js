@@ -3,14 +3,14 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { FirebaseDB } from "../config/FirebaseConfig";
 
 const EventDetails = ({ navigation, route }) => {
-	const { id, name, location, start, end } = route.params;
-	let { favourite } = route.params;
+	const { id, name, location, start, end, favourite } = route.params;
 
 	const toggleFave = async () => {
 		try {
 			const docRef = doc(FirebaseDB, "events", id);
 			setDoc(docRef, { favourite: !favourite }, { merge: true });
 			favourite = !favourite;
+			navigation.replace("EventDetails", { id: id, name: name, location: location, start: start, end: end, favourite: !favourite });
 		} catch (error) {
 			console.log(error);
 		}
