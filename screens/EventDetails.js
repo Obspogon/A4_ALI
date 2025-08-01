@@ -1,15 +1,16 @@
 import { StyleSheet, Text, View, Button, SafeAreaView, StatusBar } from "react-native";
-import { collection, getDocs } from "firebase/firestore";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { FirebaseDB } from "../config/FirebaseConfig";
 
 const EventDetails = ({ navigation, route }) => {
-	const { id, name, location, start, end, favourite } = route.params;
+	const { id, name, location, start, end } = route.params;
+	let { favourite } = route.params;
 
 	const toggleFave = async () => {
 		try {
-			const collectionRef = collection(FirebaseDB, "events").doc(id);
-
-			const res = await collectionRef.set({ favourite: true });
+			const docRef = doc(FirebaseDB, "events", id);
+			setDoc(docRef, { favourite: !favourite }, { merge: true });
+			favourite = !favourite;
 		} catch (error) {
 			console.log(error);
 		}
@@ -23,8 +24,9 @@ const EventDetails = ({ navigation, route }) => {
 				<Text style={styles.date}>
 					{start.getMonth()}-{start.getDate()} to {end.getMonth()}-{end.getDate()}
 				</Text>
+				<Text style={styles.fave}>{favourite ? "Favorited" : "Not Favorited"}</Text>
 				<Button
-					title="Favourite"
+					title="Toggle Favourite"
 					onPress={() => {
 						toggleFave();
 					}}
@@ -45,6 +47,7 @@ const styles = StyleSheet.create({
 	name: { fontSize: 50 },
 	location: { fontSize: 20 },
 	date: { fontSize: 18 },
+	fave: { fontSize: 16 },
 });
 
 export default EventDetails;

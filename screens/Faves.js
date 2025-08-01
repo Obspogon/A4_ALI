@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, Pressable } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, Pressable } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { FirebaseDB } from "../config/FirebaseConfig";
 
