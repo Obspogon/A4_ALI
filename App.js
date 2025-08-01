@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import EventList from "./screens/EventList";
 import EventDetails from "./screens/EventDetails";
+import Faves from "./screens/Faves";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
 				</Stack.Group>
 				<Stack.Group screenOptions={headerOption2}>
 					<Stack.Screen component={EventDetails} name="EventDetails" />
+					<Stack.Screen component={Faves} name="Faves" />
 				</Stack.Group>
 			</Stack.Navigator>
 		</NavigationContainer>

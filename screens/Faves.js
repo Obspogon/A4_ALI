@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, Pres
 import { collection, getDocs } from "firebase/firestore";
 import { FirebaseDB } from "../config/FirebaseConfig";
 
-const EventList = ({ navigation, route }) => {
+const Faves = ({ navigation, route }) => {
 	const [eventList, setEventList] = useState([]);
 
 	const getEvents = async () => {
@@ -20,7 +20,10 @@ const EventList = ({ navigation, route }) => {
 
 				localEvents.push(Event);
 			});
-			setEventList(localEvents);
+
+			const faves = localEvents.filter((e) => e.favourite === true);
+
+			setEventList(faves);
 		} catch (error) {
 			console.log(error);
 		}
@@ -33,7 +36,9 @@ const EventList = ({ navigation, route }) => {
 		<Pressable
 			style={styles.buttonStyle}
 			onPress={() => {
-				navigation.navigate("EventDetails", { id: item.id, name: item.name, location: item.location, start: new Date(item.start.seconds * 1000), end: new Date(item.end.seconds * 1000), favourite: item.favourite });
+				const startDate = new Date(item.start.seconds * 1000);
+				const endDate = new Date(item.end.seconds * 1000);
+				navigation.navigate("EventDetails", { id: item.id, name: item.name, location: item.location, start: startDate, end: endDate, favourite: item.favourite });
 			}}
 		>
 			<Text style={styles.buttonText}>
@@ -45,14 +50,6 @@ const EventList = ({ navigation, route }) => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={{ paddingTop: StatusBar.currentHeight }}>
-				<Pressable
-					style={styles.buttonStyle}
-					onPress={() => {
-						navigation.navigate("Faves");
-					}}
-				>
-					<Text style={styles.buttonText}>Favourites</Text>
-				</Pressable>
 				<FlatList keyExtractor={(item) => item.id} data={eventList} renderItem={({ item }) => <EventItem item={item} />} />
 				<StatusBar style="auto" />
 			</View>
@@ -83,4 +80,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default EventList;
+export default Faves;
